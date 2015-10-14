@@ -54,7 +54,7 @@ module HerokuSan
       end
 
       def deploy
-        if defined?(Rails) && File.exist?(Rails.root.join('public/assets/manifest.yml'))
+        if File.exist?(::Rails.root.join('public/assets/manifest.yml'))
           precompile_assets
         end
 
