@@ -3,7 +3,6 @@
 #   :deploy => HerokuSan::Deploy::Tagged
 # )
 require 'heroku_san'
-puts 'Loading tasks'
 
 namespace :heroku do
   desc 'displays the deploy config'
