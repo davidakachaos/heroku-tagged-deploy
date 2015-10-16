@@ -1,7 +1,7 @@
 module Heroku
   module Tagged
     module Deploy
-      VERSION = "0.0.2"
+      VERSION = "0.0.2.1"
     end
   end
 end
