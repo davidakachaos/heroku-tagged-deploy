@@ -1,3 +1,4 @@
+require 'heroku_san'
 module HerokuSan
   class Configuration
     def initialize_with_tagged(configurable, stage_factory = HerokuSan::Stage)
