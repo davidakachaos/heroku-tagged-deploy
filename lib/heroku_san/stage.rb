@@ -1,7 +1,9 @@
 # Open the stage class in heroku san and add some methods
-require 'auto_tagger'
+
 module HerokuSan
   class Stage
+    require 'auto_tagger'
+    
     def tag_repo
       auto_tag = AutoTagger::Base.new(
         stages: HerokuSan.project.stages,

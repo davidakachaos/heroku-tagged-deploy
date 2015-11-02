@@ -5,4 +5,3 @@ require File.join(File.dirname(__FILE__), '../../heroku_san/stage.rb')
 require "heroku/tagged/deploy/version"
 require "heroku/tagged/tagged_deploy"
 require "heroku/tagged/default_config"
-
