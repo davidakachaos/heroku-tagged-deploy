@@ -1,6 +1,6 @@
 module HerokuSan
   class Configuration
-    def initialize(configurable, stage_factory = HerokuSan::Stage)
+    def initialize_with_tagged(configurable, stage_factory = HerokuSan::Stage)
       @config_file = configurable.config_file
       default_options = {
         deploy: HerokuSan::Deploy::Tagged
@@ -11,5 +11,6 @@ module HerokuSan
       @options = default_options.merge(configurable.options || {})
       @stage_factory = stage_factory
     end
+    alias_method :initialize, :initialize_with_tagged
   end
 end
