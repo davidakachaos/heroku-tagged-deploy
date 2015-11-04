@@ -18,7 +18,7 @@ module HerokuSan
       def enable_maintenance_if_needed
         if @file_changes.index("db/migrate") || @file_changes.index("db/seeds.rb")
           puts "[#{@stage.name}] Migrations found -- enabling maintenance mode..."
-          stage.maintenance(:on)
+          @stage.maintenance(:on)
         end
       end
 
