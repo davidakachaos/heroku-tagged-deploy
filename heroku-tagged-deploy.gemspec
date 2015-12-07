@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  # spec.add_runtime_dependency "heroku_san", "~> 4.3.2"
+  spec.add_runtime_dependency "heroku_san", "~> 4.3.2"
   spec.add_runtime_dependency 'auto_tagger', '~> 0.2.8'
 
   spec.add_development_dependency "bundler", "~> 1.10"

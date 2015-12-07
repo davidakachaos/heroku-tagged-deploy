@@ -34,7 +34,7 @@ module HerokuSan
         end
         if @file_changes.index("db/migrate") || @file_changes.index("db/seeds.rb")
           puts "[#{@stage.name}] Disabling the maintenance mode."
-          stage.maintenance(:off)
+          @stage.maintenance(:off)
           puts "[#{@stage.name}] Restarting..."
           @stage.restart
         end
