@@ -7,7 +7,6 @@ module HerokuSan
         `git fetch --tags`
         say "Fetching current state."
         `git fetch #{@stage.name}`
-        say "Deploying..."
         previous_sha_commit = `git rev-parse HEAD`.strip
         say "Deploying these changes:"
         puts `git log --pretty=format:"* %s" #{@stage.name}/master..#{previous_sha_commit}`
@@ -53,11 +52,13 @@ module HerokuSan
       end
 
       def say(text)
-        puts "[#{Time.now.strftime('%H:%M %S')}][#{@stage.name}] #{text}"
+        puts "[#{Time.now.strftime('%H:%M:%S')}][#{@stage.name}] #{text}"
       end
 
       def deploy
+        say "Checking for precompiled assets"
         if File.exist?(::Rails.root.join('public/assets/manifest.yml'))
+          say "Found manifest.yml. Precompile assets."
           precompile_assets
         end
 
