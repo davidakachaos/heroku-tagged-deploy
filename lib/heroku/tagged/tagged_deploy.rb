@@ -16,31 +16,31 @@ module HerokuSan
       def enable_maintenance_if_needed
         if @file_changes.index("db/migrate") || @file_changes.index("db/seeds.rb")
           say "Migrations found -- enabling maintenance mode..."
-          `heroku maintenance:on -a #{@stage.app}`
+          heroku("maintenance:on -a #{@stage.app}")
         end
       end
 
       def post_changes
         if @file_changes.index("db/migrate")
           say "Running migrations, as there are new ones added."
-          `heroku run rake db:migrate -a #{@stage.app}`
+          heroku("run rake db:migrate -a #{@stage.app}")
         end
         if @file_changes.index("db/seeds.rb")
           say "It looks like you adjusted or created the seeds.rb file."
           say "Running the rake db:seed command now..."
-          `heroku run rake db:seed -a #{@stage.app}`
+          heroku("run rake db:seed -a #{@stage.app}")
         end
         if @file_changes.index("db/migrate") || @file_changes.index("db/seeds.rb")
           say "Disabling the maintenance mode."
-          `heroku maintenance:off -a #{@stage.app}`
+          heroku("maintenance:off -a #{@stage.app}")
           say "Restarting..."
-          `heroku restart -a #{@stage.app}`
+          heroku("restart -a #{@stage.app}")
         end
       end
 
       def precompile_assets
         `rake RAILS_ENV=production RAILS_GROUP=assets assets:precompile`
-        `rake RAILS_GROUP=assets assets:clean_expired`
+        `rake RAILS_ENV=production RAILS_GROUP=assets assets:clean_expired`
         if system('git diff --cached --exit-code') == false || system('git diff --exit-code') == false
           `git add -A .`
           `git gc`
@@ -71,6 +71,13 @@ module HerokuSan
         post_changes
 
         @stage.tag_repo
+      end
+
+      private
+      
+      # Executes a command in the Heroku Toolbelt
+      def heroku(command)
+        system("GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' /usr/local/heroku/bin/heroku #{command}")
       end
     end
   end
