@@ -71,6 +71,9 @@ module HerokuSan
         post_changes
 
         @stage.tag_repo
+
+        say 'Warming up the Heroku dynos'
+        sh "curl -o /dev/null http://#{@stage.app}.herokuapp.com"
       end
 
       private
