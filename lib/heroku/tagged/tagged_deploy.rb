@@ -40,7 +40,9 @@ module HerokuSan
 
       def precompile_assets
         `rake RAILS_ENV=production RAILS_GROUP=assets assets:precompile`
-        `rake RAILS_ENV=production RAILS_GROUP=assets assets:clean_expired`
+        if in_gemfile?('turbo-sprockets-rails3')
+          `rake assets:clean_expired`
+        end
         if system('git diff --cached --exit-code') == false || system('git diff --exit-code') == false
           `git add -A .`
           `git gc`
@@ -77,6 +79,12 @@ module HerokuSan
       end
 
       private
+
+      def in_gemfile?(reg)
+        content = File.read(Rails.root + '/Gemfile')
+
+        !content.index(reg).nil?
+      end
       
       # Executes a command in the Heroku Toolbelt
       def heroku(command)
