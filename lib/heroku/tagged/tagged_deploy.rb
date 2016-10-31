@@ -81,7 +81,7 @@ module HerokuSan
       private
 
       def in_gemfile?(reg)
-        content = ::Rails.root.join('Gemfile')
+        content = File.read(::Rails.root.join('Gemfile'))
 
         !content.index(reg).nil?
       end
